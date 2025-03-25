@@ -1,0 +1,170 @@
+@startuml Pong
+' Definición de clases
+
+class Pong {
+    + iniciarJuego() : Acción
+    + finalizarJuego() : Acción
+}
+
+class Cancha {
+    - dimensiones: Número[2]
+    - material: Texto
+    + dibujarCancha() : Acción
+}
+
+class Raqueta {
+    - ancho: Número
+    - alto: Número
+    - posicionX: Número
+    - posicionY: Número
+    + mover(direccion: Texto) : Acción
+}
+
+class Jugador {
+    - nombre: Texto
+    - puntuacion: Número
+    + jugar() : Acción
+}
+
+class Partida {
+    - jugador1: Jugador
+    - jugador2: Jugador
+    - marcador: Marcador
+    - tiempo: Tiempo
+    + iniciar() : Acción
+    + finalizar() : Acción
+}
+
+class Pelota {
+    - radio: Número
+    - posicionX: Número
+    - posicionY: Número
+    - velocidadX: Número
+    - velocidadY: Número
+    + mover() : Acción
+    + rebotar() : Acción
+}
+
+class Marcador {
+    - puntuacionJugador1: Número
+    - puntuacionJugador2: Número
+    + actualizarPuntuacion(jugador: Jugador) : Operación
+}
+
+class Tiempo {
+    - tiempoTranscurrido: Número
+    + contar() : Acción
+}
+
+class Falta {
+    - tipo: Texto
+    + registrarFalta(jugador: Jugador) : Operación
+}
+
+class Vida {
+    - vidasRestantes: Número
+    + perderVida() : Acción
+}
+
+class Puntaje {
+    - valor: Número
+    + actualizarPuntaje(jugador: Jugador) : Operación
+}
+
+class Victoria {
+    - jugador: Jugador
+    + celebrar() : Acción
+}
+
+class Derrota {
+    - jugador: Jugador
+    + registrarDerrota() : Operación
+}
+
+class Ranking {
+    - listaJugadores: Lista<Jugador>
+    + actualizarRanking(jugador: Jugador) : Operación
+}
+
+class Bote {
+    - altura: Número
+    + calcularBote() : Número
+}
+
+class Limite {
+    - posicionX: Número
+    - posicionY: Número
+    + verificarColision(pelota: Pelota) : Operación
+}
+
+class Red {
+    - altura: Número
+    + dibujarRed() : Acción
+}
+
+class LineaCentral {
+    - posicionY: Número
+    + dibujarLinea() : Acción
+}
+
+class LineaLateral {
+    - posicionX: Número
+    + dibujarLinea() : Acción
+}
+
+class ZonaAtaque {
+    - area: Número
+    + verificarZona(jugador: Jugador) : Operación
+}
+
+class Minuto {
+    - valor: Número
+    + incrementar() : Acción
+}
+
+class IA {
+    - nivelDificultad: Texto
+    + calcularMovimiento() : Operación
+}
+
+class Humano {
+    - nombre: Texto
+    + jugar() : Acción
+}
+
+' Relaciones entre clases
+Pong o-- Partida
+Pong o-- Raqueta
+Pong o-- "2" Jugador
+Pong o-- Cancha
+Pong o-- Pelota
+
+Pelota o-- Bote
+
+Jugador <|-- Humano
+Jugador <|-- IA
+
+Partida *-- Marcador
+Partida *-- Tiempo
+
+Marcador *-- Puntaje
+
+Raqueta *-- Jugador
+
+Cancha *-- Limite
+Cancha *-- Red
+Cancha o-- ZonaAtaque
+Limite o-- "2" LineaLateral
+Red *-- LineaCentral
+
+Puntaje o-- Victoria
+Puntaje o-- Derrota
+Puntaje o-- Ranking
+
+Tiempo *-- Minuto
+
+' Relaciones agregadas
+Partida o-- Falta
+Jugador *-- Vida
+
+@enduml
