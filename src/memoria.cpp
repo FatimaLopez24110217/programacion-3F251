@@ -35,7 +35,5 @@ int main (int argc, char const *argv[])
     cout << "Direccion dinamica" << malloc (4) << endl;
     cout << "Direccion dinamica" << malloc (sizeof(int)) << endl;
 
-
-
     return 0;
 }
